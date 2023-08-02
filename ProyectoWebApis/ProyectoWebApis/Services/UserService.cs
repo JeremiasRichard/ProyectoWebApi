@@ -28,7 +28,7 @@ namespace ProyectoWebApis.Services
 
         public async Task<AuthenticationResponse> RegisterUser(UserCredentials userCredentials)
         {
-            var user = new User { UserName = userCredentials.Email, Email = userCredentials.Email, Status = true};
+            var user = new User { UserName = userCredentials.Email, Email = userCredentials.Email, Status = true, Balance = userCredentials.Balance};
 
             var result = await _userManager.CreateAsync(user, userCredentials.Password);
 

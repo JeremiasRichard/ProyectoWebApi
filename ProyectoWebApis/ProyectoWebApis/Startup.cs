@@ -50,7 +50,6 @@ namespace ProyectoWebApis
                 c.AddSecurityRequirement(new OpenApiSecurityRequirement
                 {
                     {
-
                         new OpenApiSecurityScheme
                         {
                             Reference = new OpenApiReference

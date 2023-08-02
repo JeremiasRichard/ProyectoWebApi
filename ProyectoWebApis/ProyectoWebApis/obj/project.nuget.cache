@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "ksTdepElnIMYJKVyuIX2d+UWSCuJCEFVr7xLte32QRjtRyV17/r/78k87zcMi4lIOcvDiZa5YNLHwNc8dyXWAA==",
+  "dgSpecHash": "wDNJi23k3/883NZdujRDJLHbX4HLKM/E4KXNYVwKPLbdVTPw3i2aLDl8wH8htrZ0SUnwLvgcPLjjyqPemuC20w==",
   "success": true,
-  "projectFilePath": "C:\\Users\\mides\\OneDrive\\Escritorio\\ProyectoApi\\ProyectoWebApi\\ProyectoWebApis\\ProyectoWebApis\\ProyectoWebApis.csproj",
+  "projectFilePath": "C:\\Users\\mides\\OneDrive\\Escritorio\\ProyectoApi\\ProyectoWebApi\\ProyectoWebAPis\\ProyectoWebApis\\ProyectoWebApis.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\mides\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\mides\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\6.0.20\\microsoft.aspnetcore.authentication.jwtbearer.6.0.20.nupkg.sha512",

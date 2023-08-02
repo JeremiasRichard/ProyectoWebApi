@@ -59,7 +59,5 @@ namespace ProyectoWebApis.Controllers
             };
             return await _userService.RenewToken(userCredentials);
         }
-
-
     }
 }

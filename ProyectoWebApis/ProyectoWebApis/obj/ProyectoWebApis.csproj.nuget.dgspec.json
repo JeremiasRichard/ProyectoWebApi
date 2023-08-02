@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\mides\\OneDrive\\Escritorio\\ProyectoApi\\ProyectoWebApi\\ProyectoWebApis\\ProyectoWebApis\\ProyectoWebApis.csproj": {}
+    "C:\\Users\\mides\\OneDrive\\Escritorio\\ProyectoApi\\ProyectoWebApi\\ProyectoWebAPis\\ProyectoWebApis\\ProyectoWebApis.csproj": {}
   },
   "projects": {
-    "C:\\Users\\mides\\OneDrive\\Escritorio\\ProyectoApi\\ProyectoWebApi\\ProyectoWebApis\\ProyectoWebApis\\ProyectoWebApis.csproj": {
+    "C:\\Users\\mides\\OneDrive\\Escritorio\\ProyectoApi\\ProyectoWebApi\\ProyectoWebAPis\\ProyectoWebApis\\ProyectoWebApis.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\mides\\OneDrive\\Escritorio\\ProyectoApi\\ProyectoWebApi\\ProyectoWebApis\\ProyectoWebApis\\ProyectoWebApis.csproj",
+        "projectUniqueName": "C:\\Users\\mides\\OneDrive\\Escritorio\\ProyectoApi\\ProyectoWebApi\\ProyectoWebAPis\\ProyectoWebApis\\ProyectoWebApis.csproj",
         "projectName": "ProyectoWebApis",
-        "projectPath": "C:\\Users\\mides\\OneDrive\\Escritorio\\ProyectoApi\\ProyectoWebApi\\ProyectoWebApis\\ProyectoWebApis\\ProyectoWebApis.csproj",
+        "projectPath": "C:\\Users\\mides\\OneDrive\\Escritorio\\ProyectoApi\\ProyectoWebApi\\ProyectoWebAPis\\ProyectoWebApis\\ProyectoWebApis.csproj",
         "packagesPath": "C:\\Users\\mides\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\mides\\OneDrive\\Escritorio\\ProyectoApi\\ProyectoWebApi\\ProyectoWebApis\\ProyectoWebApis\\obj\\",
+        "outputPath": "C:\\Users\\mides\\OneDrive\\Escritorio\\ProyectoApi\\ProyectoWebApi\\ProyectoWebAPis\\ProyectoWebApis\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\mides\\AppData\\Roaming\\NuGet\\NuGet.Config",
