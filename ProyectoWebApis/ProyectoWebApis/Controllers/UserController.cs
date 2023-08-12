@@ -1,8 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ProyectoWebApis.DTOs;
+using ProyectoWebApis.Models;
 using ProyectoWebApis.Services;
+using System.Security.Claims;
 
 namespace ProyectoWebApis.Controllers
 {
@@ -18,22 +21,21 @@ namespace ProyectoWebApis.Controllers
         }
 
         [HttpPost("Register")]
-        public async Task<ActionResult<AuthenticationResponse>> Register(UserCredentials userCredentials)
+        public async Task<ActionResult<AuthenticationResponse>> Register(UserCredentialsCreate userCredentials, [FromQuery] double balance)
         {
-            var result = await _userService.RegisterUser(userCredentials);
-
+            var result = await _userService.RegisterUser(userCredentials,balance);
             if (result != null)
             {
                 return result;
             }
             else
             {
-                return BadRequest("Error registering user");
+                return BadRequest("Error while registering user");
             }
         }
 
         [HttpPost("Login")]
-        public async Task<ActionResult<AuthenticationResponse>> Login(UserCredentials userCredentials)
+        public async Task<ActionResult<AuthenticationResponse>> Login(UserCredentialsCreate userCredentials)
         {
             var result = await _userService.Login(userCredentials);
 
@@ -53,11 +55,25 @@ namespace ProyectoWebApis.Controllers
         {
             var emailClaim = HttpContext.User.Claims.Where(claim => claim.Type == "email").FirstOrDefault();
             var email = emailClaim.Value;
-            var userCredentials = new UserCredentials()
+            var userCredentialsCreate = new UserCredentialsCreate()
             {
                 Email = email,
             };
-            return await _userService.RenewToken(userCredentials);
+            return await _userService.RenewToken(userCredentialsCreate);
+        }
+
+        [HttpPost("GetAcces")]
+        public async Task<ActionResult> MakeAdmin(UserPermissionsCredentials userDTO)
+        {
+            var result = await _userService.MakeAdmin(userDTO);
+            if(result)
+            {
+                return NoContent();
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
     }
 }

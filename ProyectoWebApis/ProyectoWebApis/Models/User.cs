@@ -6,6 +6,5 @@ namespace ProyectoWebApis.Models
     {
        public bool Status { get;set; }
        public double Balance { get; set; }
-       public virtual ICollection<Operation> HistorialOfOperations { get; set; }
     }
 }

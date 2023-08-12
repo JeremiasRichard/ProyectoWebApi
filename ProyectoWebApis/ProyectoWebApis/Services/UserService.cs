@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using ProyectoWebApis.DataBase;
 using ProyectoWebApis.DTOs;
 using ProyectoWebApis.Models;
 using System.IdentityModel.Tokens.Jwt;
@@ -17,18 +19,19 @@ namespace ProyectoWebApis.Services
         private readonly IConfiguration _configuration;
         private readonly SignInManager<User> _signInManager;
         private readonly IDataProtector _dataProtector;
-
+       
         public UserService(UserManager<User> userManager, IConfiguration configuration, SignInManager<User> signInManager, IDataProtectionProvider dataProtectionProvider)
         {
             _userManager = userManager;
             _configuration = configuration;
             _signInManager = signInManager;
             _dataProtector = dataProtectionProvider.CreateProtector("testingProtectorProvider");
+           
         }
 
-        public async Task<AuthenticationResponse> RegisterUser(UserCredentials userCredentials)
+        public async Task<AuthenticationResponse> RegisterUser(UserCredentialsCreate userCredentials, double balance)
         {
-            var user = new User { UserName = userCredentials.Email, Email = userCredentials.Email, Status = true, Balance = userCredentials.Balance};
+            var user = new User { UserName = userCredentials.Email, Email = userCredentials.Email, Status = true, Balance = balance};
 
             var result = await _userManager.CreateAsync(user, userCredentials.Password);
 
@@ -43,7 +46,7 @@ namespace ProyectoWebApis.Services
             }
         }
 
-        public async Task<ActionResult<AuthenticationResponse>> Login(UserCredentials userCredentials)
+        public async Task<ActionResult<AuthenticationResponse>> Login(UserCredentialsCreate userCredentials)
         {
             var result = await _signInManager.PasswordSignInAsync(userCredentials.Email,
                userCredentials.Password, isPersistent: false, lockoutOnFailure: false);
@@ -56,15 +59,14 @@ namespace ProyectoWebApis.Services
             {
                 return null;
             }
-
         }
 
-        public async Task<AuthenticationResponse> RenewToken(UserCredentials userCredentials)
+        public async Task<AuthenticationResponse> RenewToken(UserCredentialsCreate userCredentials)
         {
             return await BuildToken(userCredentials);
         }
 
-        private async Task<AuthenticationResponse> BuildToken(UserCredentials userCredentials)
+        private async Task<AuthenticationResponse> BuildToken(UserCredentialsCreate userCredentials)
         {
             var claims = new List<Claim>()
             {
@@ -89,8 +91,24 @@ namespace ProyectoWebApis.Services
             return new AuthenticationResponse()
             {
                 Token = new JwtSecurityTokenHandler().WriteToken(securityToken),
-                Expiration = expiration
+                Expiration = expiration,
+                UserId = user.Id
             };
+        }
+
+        public async Task<bool> MakeAdmin(UserPermissionsCredentials userDTO)
+        {
+
+            if(userDTO.Email != null)
+            {
+                var user = await _userManager.FindByEmailAsync(userDTO.Email);
+                await _userManager.AddClaimAsync(user, new Claim("isAdmin", "1"));
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

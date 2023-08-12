@@ -14,6 +14,7 @@
         }
 
         public int Id { get; set; }
+        public string OperationName { get; set; }
         public OperationType Type { get; set; }
         public double Cost { get; set; }
     }

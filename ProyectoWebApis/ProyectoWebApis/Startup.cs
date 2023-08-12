@@ -4,10 +4,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using ProyectoWebApis.DataBase;
+using ProyectoWebApis.Interfaces;
 using ProyectoWebApis.Models;
+using ProyectoWebApis.Repositories;
 using ProyectoWebApis.Services;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace ProyectoWebApis
 {
@@ -22,14 +25,15 @@ namespace ProyectoWebApis
 
         public void ConfigureServices(IServiceCollection services)
         {
-            
+            services.AddControllers().AddJsonOptions(x =>
+            x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
-            services.AddControllers();
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<User, IdentityRole>()
+            services.AddIdentity<User,IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
@@ -81,10 +85,6 @@ namespace ProyectoWebApis
 
             services.AddDataProtection();
 
-            services.AddScoped<UserManager<User>>();
-            services.AddScoped<SignInManager<User>>();
-            services.AddTransient<UserService>();
-
             services.AddCors(opciones =>
             {
                 opciones.AddDefaultPolicy(builder =>
@@ -92,6 +92,15 @@ namespace ProyectoWebApis
                     builder.WithOrigins("https://www.apirequest.io").AllowAnyMethod().AllowAnyHeader();
                 });
             });
+
+            services.AddScoped<UserManager<User>>();
+            services.AddScoped<SignInManager<User>>();
+            services.AddScoped<IOperation,OperationRepository>();
+            services.AddScoped<IRecord,RecordRepository>();
+
+            services.AddTransient<UserService>();
+            services.AddTransient<OperationService>();
+            services.AddTransient<RecordService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

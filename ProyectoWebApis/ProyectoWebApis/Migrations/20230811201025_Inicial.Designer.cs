@@ -12,17 +12,18 @@ using ProyectoWebApis.DataBase;
 namespace ProyectoWebApis.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230802072438_EstableciendoRelacionesDeDB")]
-    partial class EstableciendoRelacionesDeDB
+    [Migration("20230811201025_Inicial")]
+    partial class Inicial
     {
+        /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.20")
+                .HasAnnotation("ProductVersion", "7.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
@@ -57,7 +58,7 @@ namespace ProyectoWebApis.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ClaimType")
                         .HasColumnType("nvarchar(max)");
@@ -145,6 +146,8 @@ namespace ProyectoWebApis.Migrations
                     b.ToTable("AspNetUsers", (string)null);
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUser");
+
+                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -153,7 +156,7 @@ namespace ProyectoWebApis.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ClaimType")
                         .HasColumnType("nvarchar(max)");
@@ -234,20 +237,18 @@ namespace ProyectoWebApis.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<double>("Cost")
                         .HasColumnType("float");
 
+                    b.Property<string>("OperationName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("Type")
                         .HasColumnType("int");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Operations");
                 });
@@ -258,16 +259,22 @@ namespace ProyectoWebApis.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<double>("Ammount")
                         .HasColumnType("float");
 
-                    b.Property<string>("HttpResponse")
+                    b.Property<DateTime>("DateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("OperationResponse")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Operation_Id")
                         .HasColumnType("int");
+
+                    b.Property<double>("User_Balance")
+                        .HasColumnType("float");
 
                     b.Property<string>("User_Id")
                         .HasColumnType("nvarchar(450)");
@@ -345,13 +352,6 @@ namespace ProyectoWebApis.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ProyectoWebApis.Models.Operation", b =>
-                {
-                    b.HasOne("ProyectoWebApis.Models.User", null)
-                        .WithMany("HistorialOfOperations")
-                        .HasForeignKey("UserId");
-                });
-
             modelBuilder.Entity("ProyectoWebApis.Models.Record", b =>
                 {
                     b.HasOne("ProyectoWebApis.Models.Operation", "Operation")
@@ -367,11 +367,6 @@ namespace ProyectoWebApis.Migrations
                     b.Navigation("Operation");
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("ProyectoWebApis.Models.User", b =>
-                {
-                    b.Navigation("HistorialOfOperations");
                 });
 #pragma warning restore 612, 618
         }
